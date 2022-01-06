@@ -9,10 +9,11 @@ namespace App.WindowsService
 {
     public class SteamVRWatcher : BackgroundService
     {
-
+        private const double POLLING_SECONDS = 5;
         private const string PROCESS_NAME = "vrmonitor";
         private readonly ILogger<SteamVRWatcher> _logger;
         private bool _isRunning = false;
+        
 
         public SteamVRWatcher(ILogger<SteamVRWatcher> logger)
         {
@@ -24,13 +25,12 @@ namespace App.WindowsService
             while (!stoppingToken.IsCancellationRequested)
             {
                 Process[] pname = Process.GetProcessesByName(PROCESS_NAME);
-
                 if (pname.Length > 0)
                 {
                     if (!_isRunning)
                     {
                         _isRunning = true;
-                        _logger.LogInformation("SteamVR Status: Running");
+                        _logger.LogInformation("SteamVR Status: Started");
                     }
                 }
                 else
@@ -41,7 +41,7 @@ namespace App.WindowsService
                         _logger.LogInformation("SteamVR Status: Stopped");
                     }
                 }
-                await Task.Delay(TimeSpan.FromSeconds(2), stoppingToken);
+                await Task.Delay(TimeSpan.FromSeconds(POLLING_SECONDS), stoppingToken);
             }
         }
     }
