@@ -1,22 +1,29 @@
-﻿using System;
+﻿// using System;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Configuration;
-using System.Threading;
+// using Microsoft.Extensions.Configuration;
+// using System.Threading;
+using App.WindowsService;
+using System.Threading.Tasks;
 class Program
 {
-    static void Main(string[] args)
+    static async Task Main(string[] args)
     {
-        var host = new HostBuilder()
-        .ConfigureHostConfiguration(configHost => {
-
+        using IHost host = Host.CreateDefaultBuilder(args)
+        .UseWindowsService(options =>
+        {
+            options.ServiceName = "SteamVR Watcher Service";
         })
-        .ConfigureServices((hostContext, services) => {
+        .ConfigureServices(services =>
+        {
             services.AddHostedService<SteamVRWatcher>();
         })
-        .UseConsoleLifetime()
         .Build();
-        host.Run();
+        await host.RunAsync();
     }
 }
+
+
+
+
 
