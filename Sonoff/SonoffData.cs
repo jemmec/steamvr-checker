@@ -21,4 +21,9 @@ public class SonoffData
     [JsonPropertyName("signalStrength")]
     public int? SignalStrength { get; set; }
 
+    [JsonPropertyName("ssid")]
+    public string? Ssid { get; set; }
+
+    [JsonPropertyName("password")]
+    public string? Password { get; set; }
 }

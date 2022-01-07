@@ -19,4 +19,13 @@ public class SonoffDevice
 
     [JsonPropertyName("port")]
     public string Port { get; set; }
+
+    /// <summary>
+    /// Gets this device's URI for sending HTTP requests
+    /// </summary>
+    /// <returns></returns>
+    public Uri GetUri()
+    {
+        return new Uri($"http://{IpAddress}:{Port}/zeroconf/");
+    }
 }
