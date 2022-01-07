@@ -7,13 +7,15 @@ using System.Text.Json;
 /// </summary>
 public class SonoffClient
 {
-
     protected HttpClient _client;
+
 
     public SonoffClient()
     {
         _client = new HttpClient();
     }
+
+
 
     /// <summary>
     /// Switches the Sonoff device on or off
@@ -38,6 +40,7 @@ public class SonoffClient
         HttpRequestException err = null;
         try
         {
+            Console.WriteLine("Sending switch request");
             res = await _client.PostAsync(device.GetUri() + "switch",
             new StringContent(
                JsonSerializer.Serialize(request,
@@ -49,6 +52,7 @@ public class SonoffClient
 
             if (res.IsSuccessStatusCode)
             {
+                Console.WriteLine("Succesfully recieved response");
                 string resContent = await res.Content.ReadAsStringAsync();
                 body = JsonSerializer.Deserialize<SonoffResponse>(resContent);
             }
