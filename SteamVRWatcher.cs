@@ -35,7 +35,7 @@ namespace App.WindowsService
                 Devices = new SonoffDevice[]{
                     new SonoffDevice{
                         Id ="",
-                        IpAddress = "192.162.2.2",
+                        IpAddress = "192.168.1.9",
                         Port = "8081"
                     }
                 }

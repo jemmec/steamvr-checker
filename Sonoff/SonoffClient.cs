@@ -28,7 +28,7 @@ public class SonoffClient
     {
         SonoffRequest request = new SonoffRequest
         {
-            DeviceId = device.Id,
+            // DeviceId = device.Id,
             Data = new SonoffData
             {
                 Switch = state
@@ -41,13 +41,16 @@ public class SonoffClient
         try
         {
             Console.WriteLine("Sending switch request");
-            res = await _client.PostAsync(device.GetUri() + "switch",
-            new StringContent(
-               JsonSerializer.Serialize(request,
+            var json = JsonSerializer.Serialize(request,
                new JsonSerializerOptions
                {
                    DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault
-               })
+               });
+
+            Console.WriteLine("Request = " + json);
+
+            res = await _client.PostAsync(device.GetUri() + "switch", new StringContent(
+                json
             ));
 
             if (res.IsSuccessStatusCode)

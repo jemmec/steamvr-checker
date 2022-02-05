@@ -1,17 +1,14 @@
 using System;
 using System.Text.Json.Serialization;
 
-
-
-
 /// <summary>
 /// Base request object
 /// </summary>
 [Serializable]
 public class SonoffRequest
 {
-    [JsonPropertyName("deviceid")]
-    public string DeviceId { get; set; }
+    // [JsonPropertyName("deviceid")]
+    // public string DeviceId { get; set; }
 
     [JsonPropertyName("data")]
     public SonoffData Data { get; set; }
@@ -23,11 +20,11 @@ public class SonoffRequest
 [Serializable]
 public enum SwitchState
 {
-    on, off
+    on=1, off=2
 }
 
 [Serializable]
 public enum StartupState
 {
-    stay, on, off
+    stay=1, on=2, off=3
 }
